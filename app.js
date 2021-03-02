@@ -161,4 +161,70 @@ let calculator = {
   
   ladder.showStep().up().up().up().down().down(); // 1
 
+
+/* Recursive deep copy function using a costructor and objects */
+
+function Constructor() {
+  this.name = "Ivan";
+  this.data = {
+      name: {
+        age: 22,
+      }
+    }
+  };
+
+let user = new Constructor();
+
+let admin = {};
+
+function getObj(admin,user) { // Meaning return admin[key] and user[key]
+  for(key in user) {  
+    if(typeof user[key] !== "object") { //If propertyes, keys in object user don't be equally the object 
+      admin[key] = user[key];     //Then we coppy this propertyes in new object admin[key].
+    }else {
+      admin[key] = {};   //Otherwise, If property transmitted to admin from user will be equally the object.
+     return getObj(admin[key],user[key]); // Then return, transmitte propertyes from this object (admin[key]) to parametrs of function, and property inside object user[key] also transmitte whatever to find next values inside, pull and copy from it.
+    } 
+  }
+}
+
+getObj(admin,user)
+
+admin.data.name.age = 2
+
+console.log(user) // 22
+console.log(admin) // 2
+
+/* Also one more solve without Constructor */
+
+let user = {
+  name: "Ivan",
+  data: {
+    name: {
+      age: 22,
+    }
+  }
+};
+
+let admin = {};
+
+function getObj(admin,user) {
+  for(key in user) {
+    if(typeof user[key] !== "object") { 
+      admin[key] = user[key];     
+    }else {
+      admin[key] = {};   
+     return getObj(admin[key],user[key]); 
+    } 
+  }
+}
+
+getObj(admin,user)
+
+admin.data.name.age = 2
+
+console.log(user) // 22
+console.log(admin) // 2
+
+
   /* Thank you for attention! */
